@@ -7,10 +7,12 @@ namespace dipl4.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly PapirusContext _context; // Добавьте контекст базы данных в ваш контроллер
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, PapirusContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -18,10 +20,10 @@ namespace dipl4.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
         public IActionResult Main()
         {
             return View();
@@ -30,6 +32,73 @@ namespace dipl4.Controllers
         {
             return View();
         }
+        public IActionResult CreateOrd()
+        {
+            // Получите список продуктов из базы данных
+            var products = _context.Products.ToList();
+
+            // Передайте список продуктов в представление
+            return View(products);
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrd(string CustomerName, string CustomerContacts, DateTime DeadlineDate, List<int> ProductIds, List<int> Quantities)
+        {
+            if (!string.IsNullOrEmpty(CustomerName) && !string.IsNullOrEmpty(CustomerContacts) && ProductIds != null && Quantities != null && ProductIds.Count == Quantities.Count)
+            {
+                // Проверяем наличие пользователя
+                var user = _context.Users.FirstOrDefault(u => u.ClientName == CustomerName && u.ClientContact == CustomerContacts);
+
+                // Если пользователь не найден, создаем нового
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        ClientName = CustomerName,
+                        ClientContact = CustomerContacts
+                        // Другие поля, если необходимо
+                    };
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                }
+                // Создаем новый заказ
+                var order = new Order
+                {
+                    // Заполняем данные заказа
+                    DateOfCreate = DateTime.Now,
+                    DeadLine = DeadlineDate,
+                    UserId = user.Iduser,
+                    StatusId = 1,
+                    // Дополнительные данные о заказе, если необходимо
+                };
+
+                // Сохраняем заказ в базе данных
+                _context.Orders.Add(order);
+                _context.SaveChanges();
+
+                // Добавляем товары в заказ
+                for (int i = 0; i < ProductIds.Count; i++)
+                {
+                    var orderProduct = new OrderProduct
+                    {
+                        OrderId = order.Idorder,
+                        ProductId = ProductIds[i],
+                        Amount = Convert.ToString(Quantities[i]),
+                        // Дополнительные данные о товаре в заказе, если необходимо
+                    };
+                    _context.OrderProducts.Add(orderProduct);
+                    _context.SaveChanges();
+                }
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Home"); // Перенаправляем пользователя на главную страницу после успешного создания заказа
+            }
+
+            // Если данные неверны, возвращаем пользователя на страницу создания заказа с сообщением об ошибке
+            return RedirectToAction("CreateOrd", "Home");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

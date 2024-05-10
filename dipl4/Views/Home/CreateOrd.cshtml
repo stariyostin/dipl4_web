@@ -1,0 +1,52 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Создание заказа";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="~/css/createord.css" asp-append-version="true" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<form asp-action="CreateOrd" method="post">
+    <div class="row">
+        <div class="container">
+            <h2>Создание заказа</h2>
+            <div class="col-3">
+                <input class="effect-1" type="text" placeholder="Ваше имя" name="CustomerName">
+                <span class="focus-border"></span>
+            </div>
+            <div class="col-3">
+                <input class="effect-1" type="text" placeholder="Ваши контакты" name="CustomerContacts">
+                <span class="focus-border"></span>
+            </div>
+            <div class="col-3">
+                <input class="effect-1" type="date" placeholder="Выберите дату" name="DeadlineDate">
+                <a class="Desc">Выберите дедлайн</a>
+                <span class="focus-border"></span>
+            </div>
+        </div>
+    </div>
+    <div id="product-container">
+        <div class="product-row">
+            <div class="col-3">
+                <select class="effect-1 product-select" name="ProductIds">
+                    <option value="">Выберите товар</option>
+                    @foreach (var product in Model)
+                    {
+                        <option value="@product.Idproduct">@product.Name (всего @product.TotalAmount шт.)</option>
+                    }
+                </select>
+                <span class="focus-border"></span>
+            </div>
+            <div class="col-3">
+                <input class="effect-1 product-quantity" type="number" placeholder="Количество" min="1" value="1" name="Quantities">
+                <span class="focus-border"></span>
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-danger remove-product">Удалить</button>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary add-product">Добавить товар</button>
+    <button type="submit" class="btn btn-success">Создать заказ</button>
+</form>
+<script src="~/js/script.js"></script>
+<script src="~/js/createord.js"></script>

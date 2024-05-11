@@ -26,14 +26,16 @@ namespace dipl4.Controllers
         //}
         public IActionResult Main()
         {
+            ViewBag.SuccessMessage = TempData["SuccessMessage"]?.ToString();
             return View();
         }
         public IActionResult Catalog()
         {
             return View();
         }
-        public IActionResult CreateOrd()
+        public IActionResult CreateOrd(int? productId)
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();
             // ѕолучите список продуктов из базы данных
             var products = _context.Products.ToList();
 
@@ -46,8 +48,30 @@ namespace dipl4.Controllers
         {
             if (!string.IsNullOrEmpty(CustomerName) && !string.IsNullOrEmpty(CustomerContacts) && ProductIds != null && Quantities != null && ProductIds.Count == Quantities.Count)
             {
-                // ѕровер€ем наличие пользовател€
-                var user = _context.Users.FirstOrDefault(u => u.ClientName == CustomerName && u.ClientContact == CustomerContacts);
+                // ѕроверка дедлайна
+                if (DeadlineDate.Date < DateTime.Now.Date)
+                {
+                    TempData["ErrorMessage"] = "ќшибка при создании заказа: указан некорректный дедлайн";
+                    return RedirectToAction("CreateOrd", "Home");
+                }
+
+                // ѕроверка количество товара в заказе
+                for (int i = 0; i < ProductIds.Count; i++)
+                {
+                    var productId = ProductIds[i];
+                    var quantity = Quantities[i];
+
+                    // ѕровер€ем наличие товара на складе
+                    var product = _context.Products.FirstOrDefault(p => p.Idproduct == productId);
+                    if (product == null || Convert.ToInt32(product.TotalAmount) < quantity)
+                    {
+                        TempData["ErrorMessage"] = $"ќшибка при создании заказа: товар {product.Name} недоступен на складе";
+                        return RedirectToAction("CreateOrd", "Home");
+                    }
+                }
+
+                    // ѕровер€ем наличие пользовател€
+                    var user = _context.Users.FirstOrDefault(u => u.ClientName == CustomerName && u.ClientContact == CustomerContacts);
 
                 // ≈сли пользователь не найден, создаем нового
                 if (user == null)
@@ -92,11 +116,17 @@ namespace dipl4.Controllers
 
                 _context.SaveChanges();
 
-                return RedirectToAction("Index", "Home"); // ѕеренаправл€ем пользовател€ на главную страницу после успешного создани€ заказа
+                TempData["SuccessMessage"] = "«аказ создан успешно";
+                return RedirectToAction("Main", "Home"); // ѕеренаправл€ем пользовател€ на главную страницу после успешного создани€ заказа
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "ќшибка при создании заказа: заполните все пол€ корректно";
+
+                // ≈сли данные неверны, возвращаем пользовател€ на страницу создани€ заказа с сообщением об ошибке
+                return RedirectToAction("CreateOrd", "Home");
             }
 
-            // ≈сли данные неверны, возвращаем пользовател€ на страницу создани€ заказа с сообщением об ошибке
-            return RedirectToAction("CreateOrd", "Home");
         }
 
 

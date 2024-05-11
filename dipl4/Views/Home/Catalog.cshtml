@@ -35,8 +35,8 @@
                         <div class="col-md-12">
                             <div class="card-footer ">
                                 <p>
-                                    <a class="btn btn-outline-dark float-right" href="@item.Name">
-                                        <i class="bi bi-eye-fill"></i> Смотреть
+                                        <a class="btn btn-outline-dark float-right" href="@Url.Action("CreateOrd", "Home"@* , new { productId = item.Idproduct } *@)">
+                                        <i class="bi bi-eye-fill"></i> К заказу!
                                     </a>
                                 </p>
                             </div>

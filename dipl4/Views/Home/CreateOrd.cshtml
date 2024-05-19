@@ -24,7 +24,7 @@
                 <span class="focus-border"></span>
             </div>
             <div class="col-3">
-                <input class="effect-1" type="date" placeholder="Выберите дату" name="DeadlineDate">
+                <input class="effect-1" type="date" placeholder="Выберите дату" name="DeadlineDate" min="@DateTime.Now.ToString("yyyy-MM-dd")">
                 <a class="Desc">Выберите дедлайн</a>
                 <span class="focus-border"></span>
             </div>
@@ -54,5 +54,13 @@
     <button type="button" class="btn btn-primary add-product">Добавить товар</button>
     <button type="submit" class="btn btn-success">Создать заказ</button>
 </form>
+<script>
+
+    // Устанавливаем минимальную дату для инпута дедлайна на текущую дату
+    document.addEventListener('DOMContentLoaded', function () {
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('DeadlineDate').setAttribute('min', today);
+    });
+</script>
 <script src="~/js/script.js"></script>
 <script src="~/js/createord.js"></script>

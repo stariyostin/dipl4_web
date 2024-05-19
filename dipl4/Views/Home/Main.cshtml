@@ -4,8 +4,11 @@
 }
 @if (ViewBag.SuccessMessage != null)
 {
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Поздравляем!</h4>
         @ViewBag.SuccessMessage
+        <hr>
+        <p class="mb-0">Наши менеджеры в скором времени свяжутся с Вами!</p>
     </div>
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />

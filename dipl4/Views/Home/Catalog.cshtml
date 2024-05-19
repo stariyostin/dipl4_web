@@ -1,53 +1,79 @@
-﻿@model Product
+﻿@model IEnumerable<Product>
 @{
     ViewData["Title"] = "Каталог";
     Layout = "_Layout";
 }
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-<form asp-action="Catalog" method="post" enctype="multipart/form-data">
 
-    <div class="row">
-        @using (PapirusContext db = new PapirusContext())
-        {
-            @foreach (var item in db.Products)
-            {
-                <div class="col-md-4 col-xs-6 border-primary mb-3">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-12">
-                                <div class="card-header text-white bg-black">
-                                    <p class="card-text">
-                                        <h5 class="card-title">
-                                            @item.Name
-                                        </h5>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <img src="~/Images/@(item.Idproduct).jpg" alt="Product Image" width="220" height="300" />
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card-body">
-                                    <p class="card-text"><b>Название: </b>@item.Name</p>
-                                    <p class="card-text"><b>Количество: </b>@item.TotalAmount</p>
-                            </div>
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+<form asp-action="Catalog" method="get">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Что вы ищете?" value="@ViewData["CurrentFilter"]" />
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-black">
+                            <p class="card-text">
+                                <h5 class="card-title">@item.Name</h5>
+                            </p>
                         </div>
-                        <div class="col-md-12">
-                            <div class="card-footer ">
-                                <p>
-                                        <a class="btn btn-outline-dark float-right" href="@Url.Action("CreateOrd", "Home"@* , new { productId = item.Idproduct } *@)">
-                                        <i class="bi bi-eye-fill"></i> К заказу!
-                                    </a>
-                                </p>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="~/Images/@(item.Idproduct).jpg" alt="Product Image" width="220" height="300" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text"><b>Название: </b>@item.Name</p>
+                            <p class="card-text"><b>Количество: </b>@item.TotalAmount</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p>
+                                <a class="btn btn-outline-dark float-right" href="@Url.Action("CreateOrd", "Home", new { productId = item.Idproduct })">
+                                    <i class="bi bi-eye-fill"></i> К заказу!
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-            }
-        }
-    </div>
-    <div class="foot">
+        </div>
+    }
+</div>
 
-    </div>
-</form>
+<div class="foot"></div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#searchString").autocomplete({
+                source: '@Url.Action("AutocompleteSearch", "Home")',
+                minLength: 2,
+                focus: function (event, ui) {
+                    $("#searchString").val(ui.item.label);
+                    return false;
+                },
+                select: function (event, ui) {
+                    $("#searchString").val(ui.item.label);
+                    return false;
+                }
+            }).autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<div>" + item.label + "</div>")
+                    .appendTo(ul);
+            };
+        });
+    </script>
+}
+

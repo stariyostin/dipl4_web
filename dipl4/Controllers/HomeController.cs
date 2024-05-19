@@ -1,6 +1,7 @@
 using dipl4.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
 
 namespace dipl4.Controllers
 {
@@ -29,10 +30,32 @@ namespace dipl4.Controllers
             ViewBag.SuccessMessage = TempData["SuccessMessage"]?.ToString();
             return View();
         }
-        public IActionResult Catalog()
+
+        [HttpGet]
+        public JsonResult AutocompleteSearch(string term)
         {
-            return View();
+            var products = _context.Products
+                .Where(p => p.Name.Contains(term))
+                .Select(p => new { label = p.Name, value = p.Idproduct })
+                .ToList();
+
+            return Json(products);
         }
+
+        public IActionResult Catalog(string searchString)
+        {
+            var products = from p in _context.Products
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Name.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            return View(products.ToList());
+        }
+
         public IActionResult CreateOrd(int? productId)
         {
             ViewBag.ErrorMessage = TempData["ErrorMessage"]?.ToString();

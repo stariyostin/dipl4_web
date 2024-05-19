@@ -20,3 +20,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+.ui-helper-hidden-accessible {
+    display: none;
+}
+.ui-autocomplete {
+    background-color: white; /* Задайте нужный вам цвет фона */
+    border: 1px solid #ccc; /* Добавьте границу для улучшения видимости */
+    z-index: 1000; /* Убедитесь, что значение z-index достаточно высокое */
+    max-height: 200px; /* Ограничьте максимальную высоту */
+    overflow-y: auto; /* Добавьте прокрутку, если вариантов много */
+}
+.ui-menu-item-wrapper.ui-state-active {
+    background-color: #007bff; /* Цвет фона для выделенного элемента */
+    color: white; /* Цвет текста для выделенного элемента */
+}

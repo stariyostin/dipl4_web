@@ -15,18 +15,18 @@ $(window).load(function () {
     })
 });
 
-$(document).ready(function () {
-    var productContainerElement = $('#product-container');
-    var productRowTemplate = productContainerElement.find('.product-row').first().clone();
+//$(document).ready(function () {
+//    var productContainerElement = $('#product-container');
+//    var productRowTemplate = productContainerElement.find('.product-row').first().clone();
 
-    $('.add-product').click(function () {
-        var newProductRow = $('.product-row').first().clone();
-        newProductRow.find('.product-select').val('');
-        newProductRow.find('.product-quantity').val('1');
-        $('#product-container').append(newProductRow);
-    });
+//    $('.add-product').click(function () {
+//        var newProductRow = $('.product-row').first().clone();
+//        newProductRow.find('.product-select').val('');
+//        newProductRow.find('.product-quantity').val('1');
+//        $('#product-container').append(newProductRow);
+//    });
 
-    $(document).on('click', '.remove-product', function () {
-        $(this).closest('.product-row').remove();
-    });
-});
+//    $(document).on('click', '.remove-product', function () {
+//        $(this).closest('.product-row').remove();
+//    });
+//});

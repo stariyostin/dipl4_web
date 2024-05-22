@@ -12,18 +12,61 @@
     </div>
 }
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/swiper-bundle.min.css" />
 <form asp-action="Main" method="post">
-   
-  
     <div class="new">
-    <p class="txt">Добро пожаловать!</p>
-    <p class="txt">Наш сайт создан для того чтобы дать клиентам возможность просмотреть наш широкий ассортимент</p>
-    <p class="txt">Вы можете посетить страницу каталога и страницу для создания заказа</p>
+        <h2 class="txt">Добро пожаловать!</h2>
+        <p class="txt">Наш сайт создан для того чтобы дать клиентам возможность просмотреть наш широкий ассортимент</p>
+        <p class="txt">Вы можете посетить страницу каталога и страницу для создания заказа</p>
     </div>
     <div class="MainImg">
-        <img src="https://wallpapersgood.ru/resize/1600x1200/wallpapers/main2/201816/15240809325ad7a124241c51.435320591.jpg" height=600 />
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="~/ResourceImgs/banner_black.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="~/ResourceImgs/banner_blue.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="~/ResourceImgs/banner_green.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="~/ResourceImgs/banner_red.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="~/ResourceImgs/banner_yellow.jpg" />
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="foot">
-
+    <div class="new">
+        <h2 class="txt">О компании</h2>
+        <p class="txt">ООО «ПапирРус» более 10 лет производит бумажную посуду с печатью. За этот период нами наработан опыт, достаточный станочный парк, и, также, желание развиваться дальше, не останавливаясь на достигнутом.
+            <br>
+            Работа с каждым клиентом строится на индивидуальной основе, наши менеджеры выслушают Ваши пожелания и предложат наиболее удобные для Вас условия работы.
+            <br>
+            Оборудование, которым обладает компания, позволяет производить весь цикл производства: от печати до упаковки готовой продукции, на собственной производственной площадке.
+            <br>
+            Для производства используется сырьё отечественного и импортного производства, имеющее сертификаты и разрешения для контакта с пищевыми продуктами.
+            <br>
+            Печать производится на флексопечатном оборудовании до 4 цветов: в цветовой палитре CMYK или PANTONE, красками на водной основе, без химических разбавителей.
+            <br>
+            Мы производим продукцию для сетей общественного питания, для торговых сетей с упаковкой для дальнейшей продажи в розницу, упаковку для мороженого, товары для праздника и пр. На всю производимую продукцию имеются сертификаты и протоколы испытаний.
+        </p>
     </div>
+    <div class="foot"></div>
 </form>
+<script src="~/js/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var swiper = new Swiper('.swiper-container', {
+            // loop: true,
+            spaceBetween: 350,
+            centeredSlides: true,
+            slidesPerView: 1,
+            rewind: true,
+            // Дополнительные настройки по необходимости
+        });
+    });
+</script>

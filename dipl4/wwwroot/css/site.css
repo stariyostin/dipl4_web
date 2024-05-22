@@ -18,8 +18,32 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    overflow-x: hidden;
 }
+
+h2 {
+    text-align: center;
+    font-size: 28px;
+    float: left;
+    width: 100%;
+    margin: 30px 0;
+    position: relative;
+    line-height: 58px;
+    font-weight: 400;
+}
+
+    h2:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 100px;
+        height: 2px;
+        background-color: #fcba65;
+        margin-left: -50px;
+    }
+
 .ui-helper-hidden-accessible {
     display: none;
 }
@@ -34,3 +58,36 @@ body {
     background-color: #007bff; /* Цвет фона для выделенного элемента */
     color: white; /* Цвет текста для выделенного элемента */
 }
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    width: auto;
+    height: auto;
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Центрирование содержимого слайда */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    width: fit-content;
+}
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }

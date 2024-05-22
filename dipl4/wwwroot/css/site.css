@@ -22,6 +22,13 @@ body {
     overflow-x: hidden;
 }
 
+.iconImg {
+    height: auto;
+    max-height: 75px;
+    width: 100%;
+    max-width: 75px; /* Максимальная ширина */
+}
+
 h2 {
     text-align: center;
     font-size: 28px;
@@ -90,4 +97,37 @@ h2 {
         display: block;
         width: 100%;
         height: auto;
+    }
+
+
+.how-we-work {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.how-we-work__item {
+    flex: 0 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+
+    .how-we-work__item img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+/* Стили для ссылок в навигации */
+.navbar-nav .nav-link {
+    text-decoration: none; /* Убираем подчеркивание по умолчанию */
+    color: inherit; /* Сохраняем исходный цвет текста */
+    transition: text-decoration 0.3s ease; /* Плавный переход для подчеркивания */
+}
+
+    /* Стили для ссылок при наведении */
+    .navbar-nav .nav-link:hover {
+        text-decoration: underline; /* Добавляем подчеркивание при наведении */
     }

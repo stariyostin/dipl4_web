@@ -42,7 +42,14 @@
                     <option value="">Выберите товар</option>
                     @foreach (var product in Model)
                     {
-                        <option value="@product.Idproduct">@product.Name (всего @product.TotalAmount шт.)</option>
+                        @if (product.Idproduct == ViewBag.ProductId)
+                        {
+                            <option value="@product.Idproduct" selected>@product.Name (всего @product.TotalAmount шт.)</option>
+                        }
+                        else
+                        {
+                            <option value="@product.Idproduct">@product.Name (всего @product.TotalAmount шт.)</option>
+                        }
                     }
                 </select>
                 <span class="focus-border"></span>

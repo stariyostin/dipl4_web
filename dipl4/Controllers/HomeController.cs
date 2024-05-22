@@ -66,6 +66,7 @@ namespace dipl4.Controllers
             ViewBag.DeadlineDate = TempData["DeadlineDate"];
             ViewBag.ProductIds = TempData["ProductIds"] as List<int>;
             ViewBag.Quantities = TempData["Quantities"] as List<int>;
+            ViewBag.ProductId = productId; // Передаем productId в ViewBag
 
             // Получите список продуктов из базы данных
             var products = _context.Products.ToList();

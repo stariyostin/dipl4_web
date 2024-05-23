@@ -30,10 +30,10 @@ html, body {
 }
 
 body {
-    font: 14px "Lato", Arial, sans-serif;
+    font: 16px "Lato", Arial, sans-serif;
     min-width: 100%;
     min-height: 100%;
-    color: #666;
+    color: #000000;
 }
 
 .container {
@@ -60,7 +60,6 @@ body {
 
 h2 {
     text-align: center;
-    color: #2079df;
     font-size: 28px;
     float: left;
     width: 100%;
@@ -77,7 +76,7 @@ h2 {
         bottom: 0;
         width: 100px;
         height: 2px;
-        background-color: #2079df;
+        background-color: #fcba65;
         margin-left: -50px;
     }
 /*= Reset CSS End
@@ -125,7 +124,7 @@ input[type="date"] {
         left: 0;
         width: 0;
         height: 2px;
-        background-color: #3399FF;
+        background-color: #fcba65;
         transition: 0.4s;
     }
 
